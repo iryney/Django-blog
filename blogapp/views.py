@@ -7,8 +7,6 @@ from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 
-
-
 def login(request):
 	auth.logout(request)
 	c = {}
