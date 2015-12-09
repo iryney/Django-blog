@@ -30,6 +30,11 @@ ALLOWED_HOSTS = []
 TEMPLATE_DIRS = (
     "blogapp/templates",
 )
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+  'django.contrib.auth.context_processors.auth',
+)
+
 # Application definition
 
 INSTALLED_APPS = (

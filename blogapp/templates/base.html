@@ -9,6 +9,10 @@
 
 <nav class="navbar navbar-default">
     <div class="container-fluid">
+    	{% if user.is_authenticated %}
+		<a href="/logout/" class="navbar-text navbar-right" style="padding: 8px; font-size: 20px; text-decoration: none">
+		Logout {{user.username}}</a>
+		{% endif %}
     	<a href="/delete/" class="navbar-text navbar-right" style="padding: 8px; font-size: 20px; text-decoration: none">Delete post</a>
 		<a href="/create/" class="navbar-text navbar-right" style="padding: 8px; font-size: 20px; text-decoration: none">Create post</a>
 		<h1 class="navbar-text"><a href="/" style="text-decoration: none">My Blog</a></h1>

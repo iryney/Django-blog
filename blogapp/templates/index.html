@@ -2,7 +2,14 @@
 
 
 {% block content %}
+
 <div class="container">
+	<form action="/sorted/" method="POST">{% csrf_token %}
+	<span>
+	<input type="text" class= "input-sm" placeholder="Sort by author" name="input_author" style="margin-left: 40%; ">
+	<!--<input type="submit" value="Sort" class="btn btn-primary">-->
+	</span>
+	</form>
 	{% for post in posts %}
 		<div class="post">
 		<h2>{{ post.title }}</h2>

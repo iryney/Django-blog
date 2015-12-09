@@ -10,4 +10,5 @@ urlpatterns = patterns('',
     url(r'^create/$', 'blogapp.views.create'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^delete/$', 'blogapp.views.delete'),
+    url(r'^sorted/$', 'blogapp.views.sortByAuthor')
 )

@@ -6,6 +6,7 @@ from django.core.context_processors import csrf
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
+from django.template import RequestContext
 
 def login(request):
 	auth.logout(request)
@@ -17,7 +18,7 @@ def login(request):
 		user = auth.authenticate(username=username, password=password)
 		if user is not None:
 			auth.login(request, user)
-			return HttpResponseRedirect('/')
+			return HttpResponseRedirect('/')		
 	return render_to_response('login.html', c)
 
 
@@ -29,7 +30,9 @@ def logout(request):
 @login_required(login_url='/login/')
 def home(request):
 	posts = Posts.objects.all().order_by('-time')[:10]
-	return render_to_response('index.html', {'posts' : posts})
+	return render_to_response('index.html', {'posts' : posts, 'user': request.user})
+
+
 
 @login_required(login_url='/login/')
 def create(request):
@@ -43,8 +46,10 @@ def create(request):
 	args = {}
 	args.update(csrf(request))
 	args['form'] = form
+	args['user'] = request.user
 
 	return render_to_response('create_post.html', args)			
+
 
 @login_required(login_url='/login/')
 def delete(request):
@@ -56,7 +61,19 @@ def delete(request):
 	posts = Posts.objects.all().order_by('-time')[:10]
 	args = {}
 	args.update(csrf(request))
- 	args['posts'] = posts			
+ 	args['posts'] = posts
+ 	args['user'] = request.user			
 	return render_to_response('delete.html', args)	
 
 
+@login_required(login_url='/login/')
+def sortByAuthor(request):
+	input_author = request.POST.get('input_author', '')
+	posts = Posts.objects.filter(author=input_author)	
+	if posts.count() == 0:
+		posts = Posts.objects.all()
+	args = {}
+	args.update(csrf(request))
+ 	args['posts'] = posts
+ 	args['user'] = request.user	
+	return render_to_response('index.html', args)
